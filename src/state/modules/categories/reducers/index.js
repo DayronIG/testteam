@@ -12,6 +12,8 @@ const initState = {
 };
 
 export default (state = initState, action) => {
+  // eslint-disable-next-line no-debugger
+  debugger;
   switch (action.type) {
     case CATEGORIES:
       return {

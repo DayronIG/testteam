@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import categories from './modules/categories/reducers';
+// mport categories from './modules/categories/reducers';
+import products from './modules/products/reducers';
 
 export default combineReducers({
-  categories,
+  products,
 });

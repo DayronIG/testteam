@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const cors = require('cors');
 /// Load env vars
 dotenv.config({ path: './config/config.env' });
 
@@ -8,9 +9,24 @@ dotenv.config({ path: './config/config.env' });
 const products = require('./routes/product');
 
 const app = express();
-
+app.use(cors());
 // Body parser
 app.use(express.json());
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With,content-type'
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
 
 // Mount routers
 app.use('/api/v1/products', products);

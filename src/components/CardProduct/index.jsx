@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -9,15 +10,16 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 35,
+    marginTop: 20,
+    paddingTop: '10px',
     // height: 300
   },
   media: {
-    height: 200,
-    // paddingTop: "56.25%" // 16:9
+    height: 10,
   },
   content: {
-    height: 100,
+    height: 10,
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -31,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardProduct = ({ potho, name, brand, price, stock }) => {
+const CardProduct = ({ item: { name, potho, price, brand, stock } }) => {
   const classes = useStyles();
+  console.log(potho);
+  console.log(name);
   return (
-    <Card className="card-root">
+    <Card mt={12} className="card-root">
       <CardHeader title={name} />
       <CardMedia className={classes.media} image={potho} />
       <CardContent>

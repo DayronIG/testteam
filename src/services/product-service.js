@@ -1,7 +1,11 @@
 import Api from './axios-http-caller';
 
 class ProductService {
-  getProuducts = async (category = 'all') => {
+  getProuducts = async () => {
+    return Api.get(`products`);
+  };
+
+  getProuductCategory = async (category) => {
     return Api.get(`products/${category}`);
   };
 }

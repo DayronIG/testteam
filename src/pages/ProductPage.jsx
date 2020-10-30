@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -9,8 +10,11 @@ import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Categories from '../components/Categories';
 import ListItems from '../components/ListItems';
+import * as productActions from '../state/modules/products/actions';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -46,10 +50,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductPage = ({ title }) => {
+const ProductPage = ({ title, loadProducts, products }) => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  console.log(title);
+  // eslint-disable-next-line no-debugger
+  useEffect(() => {
+    function fetchBusinesses() {
+      loadProducts();
+    }
+    fetchBusinesses();
+  }, []);
+
   return (
     <>
       <Drawer
@@ -76,7 +87,9 @@ const ProductPage = ({ title }) => {
         <Grid container spacing={10}>
           <Grid item xs={10} md={14} lg={10}>
             <Paper className={fixedHeightPaper}>
-              <ListItems />
+              {products.products.length > 0 && (
+                <ListItems products={products.products} />
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -89,4 +102,13 @@ ProductPage.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default ProductPage;
+const mapStateToProps = (state) => ({
+  products: state.products,
+});
+const mapDispatchToProps = (dispatch) => ({
+  loadProducts: () => dispatch(productActions.loadProducts()),
+  loadCategories: (category) =>
+    dispatch(productActions.loadProductsByCategory(category)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

@@ -23,15 +23,15 @@ export default (state = initState, action) => {
       };
     case PRODUCTS_SUCCESS:
       console.log('action.payload.data');
-      console.log(action.payload.data);
-      console.log('action.payload.data');
+      console.log(action.products.data);
       return {
         loaded: true,
         error: false,
         loading: false,
-        products: action.payload.data,
-        count: action.payload.count,
-        hideCount: action.payload.hideCount,
+        products: action.products.data.data,
+        count: action.products.data.count,
+        hideCount:
+          action.products.data.hideCount && action.products.data.hideCount,
       };
     case PRODUCTS_FAILURE:
       return {
